@@ -40,24 +40,24 @@ Training images consist of car and non-car images (see examples below), all of w
   
 **Non-car examples:**   
 ![noncar01][image4]![noncar02][image5]![noncar03][image6]
-
+  
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
-I tried various combinations of parameters and...
-
+Parameters for spatial, histogram and HOG methods were tuned to detect as many car windows as possible, without too many false positives. First I determined which color space provides the best features to differentiate cars and background imagery. YCrCb color space worked best for this purpose. Spatial parameters were tuned next and values of 32x32 were used to keep more spatial information than lower values. Lastly HOG parameters were tuned. Orient value of 9 seemed optimal as increasing beyond that value produced too many false positive detections. 8 pixels per cell and 2 cells per block provided the best detections when compared to higher or lower values of these parameters.
+  
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
+  
+The code for SVM training can be found in section 1. First vehicle and non-vehicle image locations were loaded from specific directories. These locations were used to load the images and extract their features. Once extracted, all features were normalized using the StandardScaler() method. Scikit learn’s LinearSVC was used to fit a SVM for detection. 2680 vehicle and 2700 non-vehicle images were used for training and produced a test accuracy of 1.0.
+  
+### Sliding Window Search
 
-I trained a linear SVM using...
-
-###Sliding Window Search
-
-####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+####1 . Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
 I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
 
 ![alt text][image3]
 
-####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
+#### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
