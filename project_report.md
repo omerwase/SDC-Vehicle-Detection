@@ -58,7 +58,7 @@ Parameters for spatial, histogram and HOG methods were tuned to detect as many c
   
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
   
-The code for SVM training can be found in section 1. First vehicle and non-vehicle image locations were loaded from specific directories. These locations were used to load the images and extract their features. Once extracted, all features were normalized using the StandardScaler() method. Scikit learn’s LinearSVC was used to fit a SVM for detection. 2680 vehicle and 2700 non-vehicle images were used for training and produced a test accuracy of 1.0.
+The code for SVM training can be found in section 1. First vehicle and non-vehicle image locations were loaded from specific directories. These locations were used to load the images and extract their features. Once extracted, all features were normalized using the StandardScaler() method. Scikit learn’s LinearSVC was used to fit a SVM for detection. 2680 vehicle and 2700 non-vehicle images were used for training and produced a test accuracy of 1.0. Training on more images did not seem to improve results.
   
  ---
   
