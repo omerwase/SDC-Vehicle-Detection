@@ -14,8 +14,17 @@
 [image4]: ./examples/noncar01.png
 [image5]: ./examples/noncar02.png
 [image6]: ./examples/noncar03.png
-[image7]: ./examples/output_bboxes.png
+[image7]: ./examples/heat01.png
+[image8]: ./examples/heat02.png
+[image9]: ./examples/heat03.png
+[image10]: ./examples/heat04.png
+[image11]: ./examples/heat05.png
+[image12]: ./examples/heat06.png
+[image12]: ./examples/left01.png
+[image12]: ./examples/left02.png
 [video1]: ./output_video_v2.mp4
+
+### Reference: the method used in this project are adopted from Udacity's vehicle detection lessons.
 
 ### Below the [rubric points](https://review.udacity.com/#!/rubrics/513/view) are addressed individually with description of implementation.
 
