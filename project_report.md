@@ -8,12 +8,12 @@
 5. Create output video using both vehicle and lane detection.
 
 [//]: # (Image References)
-[image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
-[image3]: ./examples/sliding_windows.jpg
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
+[image1]: ./examples/car01.png
+[image2]: ./examples/car02.jpg
+[image3]: ./examples/car03.jpg
+[image4]: ./examples/noncar01.jpg
+[image5]: ./examples/noncar02.png
+[image6]: ./examples/noncar03.png
 [image7]: ./examples/output_bboxes.png
 [video1]: ./project_video.mp4
 
@@ -31,24 +31,21 @@ This is the writeup / project report.
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
+HOG features are extracted in the get_hog_features() method (see section 1. Training SVM in code) using OpenCV. In the same code section the extract_features() method calls get_hog_features() along with bin_spatial() and color_hist(), and returns spatial, histogram and HOG features of a given image. This method is used to extract features from all training images.
 
-I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
+Training images consist of car and non-car images (see examples below), all of which are 64x64 pixels. The classifier was trained on both classes to differentiate between the two.
 
-![alt text][image1]
+**Car examples:**  
+![car01][image1]![car02][image2]![car03][image3]
+  
+**Non-car examples:**   
+![noncar01][image4]![noncar02][image5]![noncar03][image6]
 
-I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
-
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
-
-
-![alt text][image2]
-
-####2. Explain how you settled on your final choice of HOG parameters.
+#### 2. Explain how you settled on your final choice of HOG parameters.
 
 I tried various combinations of parameters and...
 
-####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
+#### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
 I trained a linear SVM using...
 
