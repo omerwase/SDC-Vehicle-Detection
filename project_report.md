@@ -9,13 +9,13 @@
 
 [//]: # (Image References)
 [image1]: ./examples/car01.png
-[image2]: ./examples/car02.jpg
-[image3]: ./examples/car03.jpg
-[image4]: ./examples/noncar01.jpg
+[image2]: ./examples/car02.png
+[image3]: ./examples/car03.png
+[image4]: ./examples/noncar01.png
 [image5]: ./examples/noncar02.png
 [image6]: ./examples/noncar03.png
 [image7]: ./examples/output_bboxes.png
-[video1]: ./project_video.mp4
+[video1]: ./output_video_v2.mp4
 
 ### Below the [rubric points](https://review.udacity.com/#!/rubrics/513/view) are addressed individually with description of implementation.
 
