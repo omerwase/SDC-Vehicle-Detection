@@ -51,7 +51,7 @@ The code for SVM training can be found in section 1. First vehicle and non-vehic
   
 ### Sliding Window Search
 
-####1 . Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+#### 1 . Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
 I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
 
