@@ -36,6 +36,8 @@
 
 This is the writeup / project report.
 
+---
+
 ### Histogram of Oriented Gradients (HOG)
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
@@ -58,50 +60,49 @@ Parameters for spatial, histogram and HOG methods were tuned to detect as many c
   
 The code for SVM training can be found in section 1. First vehicle and non-vehicle image locations were loaded from specific directories. These locations were used to load the images and extract their features. Once extracted, all features were normalized using the StandardScaler() method. Scikit learn’s LinearSVC was used to fit a SVM for detection. 2680 vehicle and 2700 non-vehicle images were used for training and produced a test accuracy of 1.0.
   
+ ---
+  
 ### Sliding Window Search
 
 #### 1 . Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
-
-![alt text][image3]
-
+Section 2. Vehicle Detection contains the code for performing the sliding window search. The find_cars() method extracts spatial, histogram and HOG features from the given image and uses the SVM to produce detections. This method returns all windows (bounding boxes) with detections. I experimented with various scale values (from 0.5 to 2.5). Lower values produced more false positives, whereas larger values did not detect cars further down the road. For my final implementation I used 4 scale values (0.9, 1.1, 1.4 and 1.7) and added all their heat maps together.  
+  
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+With the parameters and scale values described above the classifier performed well. I tested each scale value separately on the video to ensure there were few false positives (if any). With all the scale values combined the resulting heat maps showed distinct hotspots. There were a few false positives; however, their heat maps were much cooler than actual car detections, as shown below:
+  
+![heat01][image7]  
+![heat02][image8]  
+![heat03][image9]  
+![heat04][image10]  
+![heat05][image11]  
+![heat06][image12]  
 
-![alt text][image4]
 ---
 
 ### Video Implementation
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
 
+The final output video can be found [here](./output_video_v2.mp4)
 
-####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+#### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
-
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
-
-### Here are six frames and their corresponding heatmaps:
-
-![alt text][image5]
-
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
-
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
-
-
+I used scale values which minimized false positives and combined all their detected windows together. This resulted in few false positives which were filtered out using heat map thresholding (see code section 2. Vehicle Detection). Furthermore, I used a circular buffer (deque) to store heat values from 25 frames, with heat threshold of 32, to remove false positives. This worked well, however there are still some minor false positive detections in the video that can be removed by further tuning. Unfortunately my data pipeline takes a long time (over an hour) to process the whole video, which makes it difficult to fine-tune. 
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+The main issue I ran into was the trade-off between detecting vehicles and eliminating false positives. Certain parameter values resulted in the vehicles not being detected (such as higher scale values, and more pixels per cell for HOG features). Lower scale and pixel per cell values produced more detections, but also increased false positives. In my current implementation I've balanced the two as best as possible.
+
+The SVM had a hard time detecting the white car. This could be because most of the car images it was trained on are darker. To increase this detection, I retrained the SVM with more images of the white car from the video itself (see image below). This is not the best solution since its training on a particular case and might not generalize well.
+
+![left01][image13]  
+
+Another issue worth noting is that currently my implementation takes over an hour to process a video less than 1 minute. This clearly cannot work in real-time, as it would need to in an actual self-driving car. I believe an implementation in C/C++ using hardware support would greatly reduce the processing time.
+
 
