@@ -20,8 +20,8 @@
 [image10]: ./examples/heat04.png
 [image11]: ./examples/heat05.png
 [image12]: ./examples/heat06.png
-[image12]: ./examples/left01.png
-[image12]: ./examples/left02.png
+[image13]: ./examples/left01.png
+[image14]: ./examples/left02.png
 [video1]: ./output_video_v2.mp4
 
 ### Reference: the method used in this project are adopted from Udacity's vehicle detection lessons.
